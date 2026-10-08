@@ -500,31 +500,6 @@ section[id] {
   color: var(--text);
 }
 
-.hero__scroll {
-  position: relative;
-  width: 26px;
-  height: 44px;
-  margin-top: clamp(4px, 1.4vh, 14px);
-  border: 1.5px solid var(--cream);
-  border-radius: 13px;
-}
-
-.hero__scroll::after {
-  content: "";
-  position: absolute;
-  top: 9px;
-  left: 50%;
-  width: 3px;
-  height: 8px;
-  margin-left: -1.5px;
-  border-radius: 2px;
-  background: var(--gold-light);
-}
-
-.hero__scroll:hover {
-  border-color: var(--gold-light);
-}
-
 /* Service strip */
 
 .strip {
@@ -559,15 +534,75 @@ section[id] {
   transform: rotate(45deg);
 }
 
+.strip .strip__clone {
+  display: none;
+}
+
+/* Too narrow for one row: the row becomes a slow ticker. The list is
+   rendered twice so shifting the track by half loops seamlessly. */
 @media (max-width: 1100px) {
-  .strip ul {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px 36px;
+  .strip {
+    overflow: hidden;
+    padding-inline: 0;
   }
 
-  .strip__dot {
+  .strip .strip__track {
+    display: flex;
+    width: max-content;
+    max-width: none;
+    margin: 0;
+  }
+
+  .strip ul {
+    flex: none;
+    gap: 0 28px;
+    padding-right: 28px;
+  }
+
+  /* Separator between the end of one copy and the start of the next */
+  .strip ul::after {
+    content: "";
+    flex: none;
+    width: 6px;
+    height: 6px;
+    background: var(--navy);
+    transform: rotate(45deg);
+  }
+
+  .strip .strip__clone {
+    display: flex;
+  }
+}
+
+@media (max-width: 1100px) and (prefers-reduced-motion: no-preference) {
+  .strip .strip__track {
+    animation: strip-scroll 32s linear infinite;
+  }
+
+  .strip:hover .strip__track {
+    animation-play-state: paused;
+  }
+}
+
+/* Without motion the row stays still and can be swiped instead */
+@media (max-width: 1100px) and (prefers-reduced-motion: reduce) {
+  .strip {
+    overflow-x: auto;
+  }
+
+  .strip ul {
+    padding-inline: var(--gutter);
+  }
+
+  .strip ul::after,
+  .strip .strip__clone {
     display: none;
+  }
+}
+
+@keyframes strip-scroll {
+  to {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
@@ -1190,10 +1225,6 @@ section[id] {
 }
 
 /* Field gallery */
-
-.gallery__lede {
-  max-width: 520px;
-}
 
 .gallery {
   display: grid;
@@ -1843,22 +1874,6 @@ section[id] {
   }
 }
 
-@keyframes wheel {
-  0% {
-    opacity: 0;
-    transform: translateY(0);
-  }
-
-  30% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-}
-
 @keyframes breathe {
   from {
     transform: scale3d(1, 1, 1);
@@ -1918,10 +1933,6 @@ section[id] {
     animation-delay: 2.05s;
   }
 
-  .hero__scroll::after {
-    animation: wheel 2.8s 3s ease-in-out infinite;
-  }
-
   .reveal-on [data-reveal] {
     opacity: 0;
     transform: translate3d(0, 20px, 0);
@@ -1976,17 +1987,124 @@ section[id] {
   }
 }
 
+/* Phones: keep the logo and phone number on one line */
+.brand__name,
+.nav__phone {
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .brand {
+    gap: 8px;
+  }
+
+  .brand img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand__name {
+    font-size: 15px;
+    letter-spacing: 0.14em;
+  }
+
+  .nav a.nav__phone {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand__name {
+    font-size: 14px;
+    letter-spacing: 0.1em;
+  }
+
+  .nav a.nav__phone {
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+  }
+}
+
 @media (max-width: 720px) {
+  .strip {
+    padding-block: 18px;
+  }
+
   .strip ul {
-    flex-direction: column;
-    align-items: flex-start;
-    font-size: 13px;
+    font-size: 12px;
+    letter-spacing: 0.16em;
   }
 
   .faq summary {
     font-size: 22px;
   }
+
+  /* Footer: logo on top, services full width, company and contact side by
+     side, so the column stays short */
+  .footer {
+    padding-top: 48px;
+  }
+
+  .footer__cols {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 36px 24px;
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;
+    justify-self: center;
+    max-width: none;
+  }
+
+  .footer__brand img {
+    width: 120px;
+    height: auto;
+  }
+
+  /* The services column */
+  .footer__brand + .footer__col {
+    grid-column: 1 / -1;
+  }
+
+  .footer__col {
+    gap: 2px;
+    font-size: 15px;
+  }
+
+  .footer__col a,
+  .footer__col span {
+    padding: 4px 0;
+  }
+
+  .footer__legal {
+    margin-top: 36px;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  /* Our model at phone width */
+  .model__tally {
+    gap: clamp(20px, 7vw, 36px);
+  }
+
+  .orbit__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .orbit__items li {
+    padding: 10px 8px 12px;
+    font-size: 16px;
+  }
 }
+
+
+
+
+
+
+
 
 
 
