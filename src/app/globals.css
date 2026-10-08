@@ -2311,47 +2311,58 @@ section[id] {
     font-size: 22px;
   }
 
-  /* Footer: logo on top, services full width, company and contact side by
-     side, so the column stays short */
+  /* Footer: logo sits beside the services list on the first row, company
+     and contact share the second row, so the whole block stays short */
   .footer {
-    padding-top: 48px;
+    padding: 40px var(--gutter) 28px;
   }
 
   .footer__cols {
     display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    gap: 36px 24px;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: 28px 20px;
   }
 
   .footer__brand {
-    grid-column: 1 / -1;
-    justify-self: center;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    align-self: start;
     max-width: none;
+    margin-top: 22px;
   }
 
   .footer__brand img {
-    width: 120px;
+    width: min(100%, 110px);
     height: auto;
   }
 
   /* The services column */
   .footer__brand + .footer__col {
-    grid-column: 1 / -1;
+    grid-column: 2;
+    grid-row: 1;
   }
 
   .footer__col {
-    gap: 2px;
-    font-size: 15px;
+    gap: 0;
+    font-size: 14px;
+  }
+
+  .footer__col h2 {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    padding-bottom: 6px;
   }
 
   .footer__col a,
   .footer__col span {
-    padding: 4px 0;
+    padding: 3px 0;
   }
 
   .footer__legal {
-    margin-top: 36px;
-    font-size: 12px;
+    margin-top: 28px;
+    padding-top: 16px;
+    font-size: 11px;
     text-align: center;
   }
 
@@ -2369,6 +2380,7 @@ section[id] {
     font-size: 16px;
   }
 }
+
 
 
 
