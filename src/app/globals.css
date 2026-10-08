@@ -764,110 +764,217 @@ section[id] {
 
 /* One-partner model: client -> ALICE & CO. -> seven functions */
 
-.model__head {
+.model {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px 64px;
+  align-items: center;
+  gap: 56px clamp(40px, 6vw, 96px);
 }
 
-.model__head .heading {
-  margin-top: 18px;
+.model__head {
+  flex: 1 1 340px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .model__head p {
-  flex: 0 1 440px;
+  max-width: 440px;
 }
 
-.model {
+.model__tally {
+  display: flex;
+  gap: 36px;
+  margin-top: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+
+.model__tally dt {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 500;
+  font-variant-numeric: lining-nums;
+  line-height: 1;
+  color: var(--gold-light);
+}
+
+.model__tally dd {
+  margin-top: 8px;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--mist);
+}
+
+/* Hub and spokes: the seven roles orbit ALICE & CO. */
+.orbit {
+  position: relative;
+  flex: 1 1 520px;
+  max-width: 620px;
+  margin: 0 auto;
+  aspect-ratio: 1;
+}
+
+.orbit__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.orbit__lines line {
+  stroke: var(--gold);
+  stroke-opacity: 0.45;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.orbit__ring {
+  fill: none;
+  stroke: var(--gold);
+  stroke-opacity: 0.35;
+  stroke-width: 1;
+  stroke-dasharray: 0.6 1.4;
+  transform-origin: 50px 50px;
+}
+
+.orbit__hub {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.model__client {
-  padding: 12px 34px;
-  border: 1px solid rgba(244, 239, 228, 0.55);
-  font-size: 12px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  font-weight: 500;
-  color: var(--text);
-}
-
-.model__stem {
-  width: 1px;
-  height: 40px;
-  background: var(--gold);
-}
-
-.model__firm {
-  min-width: min(380px, 100%);
-  padding: 26px 48px 24px;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 6%;
+  border-radius: 50%;
   background: var(--gold);
   color: var(--navy);
   text-align: center;
-  transition: background-color 0.6s;
+  /* Double ring, echoing the laurel emblem */
+  box-shadow:
+    0 0 0 8px var(--navy-raised),
+    0 0 0 9px var(--gold),
+    0 24px 60px rgba(0, 0, 0, 0.45);
 }
 
-.model__firm:hover {
-  background: var(--gold-light);
-}
-
-.model__name {
+.orbit__name {
   font-family: var(--serif);
-  font-size: clamp(26px, 2.6vw, 36px);
+  font-size: clamp(20px, 1.9vw, 26px);
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
   line-height: 1.1;
 }
 
-.model__role {
-  margin-top: 8px;
-  font-size: 11px;
-  letter-spacing: 0.26em;
+.orbit__role {
+  font-size: 10px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   font-weight: 500;
+  line-height: 1.5;
 }
 
-.model__functions {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  border-top: 1px solid var(--gold);
-}
-
-.model__functions li {
+.orbit__items li {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  max-width: 158px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 22px 12px 6px 16px;
-  border-left: 1px solid var(--rule);
+  align-items: center;
+  gap: 4px;
+  padding: 10px 18px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 26px;
+  background: var(--navy-deep);
   font-family: var(--serif);
-  font-size: 21px;
-  line-height: 1.2;
+  font-size: 19px;
+  line-height: 1.15;
+  text-align: center;
   color: var(--cream);
-  transition: color 0.5s, border-color 0.5s;
+  transition:
+    background-color 0.5s,
+    border-color 0.5s,
+    color 0.5s;
 }
 
-.model__functions li:hover {
-  color: var(--gold-light);
-  border-left-color: var(--gold);
+.orbit__items li:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
 }
 
-.model__functions span {
+.orbit__items span {
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.2em;
   font-weight: 500;
   color: var(--gold);
+  transition: color 0.5s;
 }
 
-@media (max-width: 1000px) {
-  .model__functions {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    row-gap: 18px;
+.orbit__items li:hover span {
+  color: var(--navy);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .orbit__ring {
+    animation: orbit-turn 90s linear infinite;
+  }
+}
+
+@keyframes orbit-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Too narrow for the circle: hub on top, roles in a grid below */
+@media (max-width: 760px) {
+  .orbit {
+    flex-basis: 100%;
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .orbit__lines {
+    display: none;
+  }
+
+  .orbit__hub {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 220px;
+    transform: none;
+  }
+
+  .orbit__items {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .orbit__items li {
+    position: static;
+    transform: none;
+    max-width: none;
+  }
+
+  .orbit__items li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 }
 
@@ -1880,5 +1987,8 @@ section[id] {
     font-size: 22px;
   }
 }
+
+
+
 
 

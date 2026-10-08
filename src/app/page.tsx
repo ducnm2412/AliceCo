@@ -32,6 +32,23 @@ const roles = [
   "Personal assistance",
 ];
 
+// The seven roles sit evenly around the hub, starting at twelve o'clock.
+// Positions are percentages of the square orbit.
+const ORBIT_RADIUS = 39;
+const HUB_RADIUS = 20;
+const orbit = roles.map((role, index) => {
+  const angle = ((index / roles.length) * 360 - 90) * (Math.PI / 180);
+  const cos = Math.round(Math.cos(angle) * 1000) / 1000;
+  const sin = Math.round(Math.sin(angle) * 1000) / 1000;
+  return {
+    role,
+    cos,
+    sin,
+    x: 50 + cos * ORBIT_RADIUS,
+    y: 50 + sin * ORBIT_RADIUS,
+  };
+});
+
 const strengths = [
   {
     numeral: "I",
@@ -296,31 +313,64 @@ export default function Home() {
         </section>
 
         <section className="section section--raised">
-          <div className="wrap stack">
+          <div className="wrap model">
             <div className="model__head" data-reveal>
-              <div>
-                <div className="eyebrow">Our model</div>
-                <h2 className="heading">One trusted local partner</h2>
-              </div>
+              <div className="eyebrow">Our model</div>
+              <h2 className="heading">One trusted local partner</h2>
               <p className="body-sm">
                 Seven functions that clients normally contract separately are
                 delivered through a single engagement, with a single point of
                 accountability.
               </p>
+              <dl className="model__tally">
+                <div>
+                  <dt>7</dt>
+                  <dd>Functions</dd>
+                </div>
+                <div>
+                  <dt>1</dt>
+                  <dd>Contract</dd>
+                </div>
+                <div>
+                  <dt>1</dt>
+                  <dd>Contact</dd>
+                </div>
+              </dl>
             </div>
-            <div className="model" data-reveal>
-              <div className="model__client">The client</div>
-              <div className="model__stem" />
-              <div className="model__firm">
-                <div className="model__name">ALICE &amp; CO.</div>
-                <div className="model__role">Single point of accountability</div>
+            <div className="orbit" data-reveal>
+              <svg
+                className="orbit__lines"
+                viewBox="0 0 100 100"
+                aria-hidden="true"
+              >
+                <circle
+                  className="orbit__ring"
+                  cx="50"
+                  cy="50"
+                  r={ORBIT_RADIUS}
+                />
+                {orbit.map((point) => (
+                  <line
+                    key={point.role}
+                    x1={50 + point.cos * HUB_RADIUS}
+                    y1={50 + point.sin * HUB_RADIUS}
+                    x2={point.x}
+                    y2={point.y}
+                  />
+                ))}
+              </svg>
+              <div className="orbit__hub">
+                <div className="orbit__name">ALICE &amp; CO.</div>
+                <div className="orbit__role">Single point of accountability</div>
               </div>
-              <div className="model__stem" />
-              <ol className="model__functions">
-                {roles.map((role, index) => (
-                  <li key={role}>
+              <ol className="orbit__items">
+                {orbit.map((point, index) => (
+                  <li
+                    key={point.role}
+                    style={{ left: `${point.x}%`, top: `${point.y}%` }}
+                  >
                     <span>{String(index + 1).padStart(2, "0")}</span>
-                    {role}
+                    {point.role}
                   </li>
                 ))}
               </ol>
