@@ -29,6 +29,11 @@
   }
 }
 
+/* On both html and body: mobile Safari only honours it on the root */
+html {
+  overflow-x: clip;
+}
+
 body {
   background: var(--navy);
   color: var(--text);
@@ -552,6 +557,9 @@ section[id] {
 
 .hero {
   position: relative;
+  /* The glow behind the copy reaches past the viewport edges; without this
+     mobile Safari zooms the whole page out to fit it */
+  overflow: clip;
   min-height: 100svh;
   display: flex;
   align-items: center;
@@ -2380,6 +2388,7 @@ section[id] {
     font-size: 16px;
   }
 }
+
 
 
 
