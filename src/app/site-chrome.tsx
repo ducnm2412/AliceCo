@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { EnquiryForm } from "./enquiry-form";
+import { MobileMenu } from "./mobile-menu";
 import { NavServices } from "./nav-services";
 import { BrandLink } from "./scroll-top";
 import { services } from "./services/data";
@@ -41,10 +42,17 @@ export function SiteHeader() {
           <Link href="/#clients">Clients</Link>
           <Link href="/#process">Process</Link>
           <Link href="/#faq">FAQ</Link>
-          <a href={PHONE_HREF} className="nav__phone">
+          <a
+            href={PHONE_HREF}
+            className="nav__phone"
+            aria-label="Call 033 409 5326"
+          >
             033 409 5326
           </a>
         </nav>
+        <MobileMenu
+          items={services.map(({ slug, name }) => ({ slug, name }))}
+        />
       </div>
     </header>
   );

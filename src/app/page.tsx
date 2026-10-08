@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import { HeroVideo } from "./hero-video";
 import { Motion } from "./motion";
 import { services } from "./services/data";
+import { ServicesPager } from "./services-pager";
 import { CARD_SIZES } from "./site";
 import { Arrow, ContactSection, SiteFooter, SiteHeader } from "./site-chrome";
 
@@ -122,8 +123,7 @@ const faqs = [
   },
   {
     question: "Where are you based?",
-    answer:
-      "Le Van Tho Street, Go Vap District, Ho Chi Minh City.",
+    answer: "Le Van Tho Street, Go Vap District, Ho Chi Minh City.",
   },
 ];
 
@@ -222,7 +222,7 @@ export default function Home() {
                 Five services that cover the whole journey.
               </h2>
             </div>
-            <div className="services">
+            <div className="services" id="services-track">
               {services.map((service, index) => (
                 <article key={service.slug} className="service" data-reveal>
                   <div className="media service__media">
@@ -252,7 +252,9 @@ export default function Home() {
               <article className="service service--cta" data-reveal>
                 <div>
                   <div className="small-label">Not sure where to begin?</div>
-                  <h3>Tell us the situation. We will tell you what it takes.</h3>
+                  <h3>
+                    Tell us the situation. We will tell you what it takes.
+                  </h3>
                 </div>
                 <a href="#contact" className="btn btn--navy">
                   Enquire
@@ -260,6 +262,11 @@ export default function Home() {
                 </a>
               </article>
             </div>
+            <ServicesPager trackId="services-track" count={services.length} />
+            <a href="#contact" className="services__enquire">
+              Not sure? Enquire
+              <Arrow />
+            </a>
           </div>
         </section>
 
@@ -353,7 +360,9 @@ export default function Home() {
               </svg>
               <div className="orbit__hub">
                 <div className="orbit__name">ALICE &amp; CO.</div>
-                <div className="orbit__role">Single point of accountability</div>
+                <div className="orbit__role">
+                  Single point of accountability
+                </div>
               </div>
               <ol className="orbit__items">
                 {orbit.map((point, index) => (
