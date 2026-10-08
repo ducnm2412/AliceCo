@@ -14,6 +14,7 @@
   --mist: #c5ccda;
   --haze: #a9b3c6;
   --slate: #3b4658;
+  --ink: #1d2638;
   --rule: rgba(201, 164, 92, 0.4);
   --rule-soft: rgba(201, 164, 92, 0.22);
   --serif: var(--font-cormorant), Georgia, serif;
@@ -144,8 +145,12 @@ a:hover {
   color: var(--navy);
 }
 
-.section--ivory p {
-  color: var(--slate);
+/* Jost at 300 washes out on the light background, so body copy here is
+   heavier and darker than on navy */
+.section--ivory p,
+.section--ivory li {
+  color: var(--ink);
+  font-weight: 400;
 }
 
 .split {
@@ -1618,7 +1623,6 @@ section[id] {
 .overview__audience li {
   position: relative;
   padding-left: 24px;
-  color: var(--slate);
 }
 
 .overview__audience li::before {
@@ -1876,4 +1880,5 @@ section[id] {
     font-size: 22px;
   }
 }
+
 
